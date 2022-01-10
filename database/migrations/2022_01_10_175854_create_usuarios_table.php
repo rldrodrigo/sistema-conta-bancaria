@@ -23,6 +23,7 @@ class CreateUsuariosTable extends Migration
             $table->string('sexo', 2);
             $table->string('senha');
             $table->integer('numero_conta');
+            $table->string('telefone', 25);
             $table->timestamps();
         });
     }

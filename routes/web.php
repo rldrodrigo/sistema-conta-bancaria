@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,15 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+Route::get('/', [HomeController::class])->name('home');
 
 Route::post('painel', [UsuarioController::class, 'login'])->name('usuarios.login');
 
-Route::get('registrar', function () {
-    return view('registrar');
-});
+Route::get('/registrar', [HomeController::class, 'registrar'])->name('registrar');
+
+Route::post('/registrar', [UsuarioController::class, 'insert'])->name('usuarios.insert');
 
 
 Route::get('/', [UsuarioController::class, 'logout'])->name('usuarios.logout');

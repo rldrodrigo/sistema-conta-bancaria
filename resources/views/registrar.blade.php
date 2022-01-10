@@ -43,7 +43,12 @@
     <div class="main">
         <div class="col-md-6 col-sm-12">
             <div class="register-form">
-                <form>
+                <form method="post" action="{{route('usuarios.insert')}}">
+                    @csrf
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" class="form-control" placeholder="Nome" name="nome">
+                    </div>
                     <div class="form-group">
                         <label>CPF</label>
                         <input type="text" class="form-control" placeholder="CPF" name="cpf" id="cpf">
@@ -59,6 +64,10 @@
                     <div class="form-group">
                         <label>Endereço</label>
                         <input type="text" class="form-control" placeholder="Endereço" name="endereco">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefone</label>
+                        <input type="text" class="form-control" placeholder="Telefone" name="telefone" id="telefone">
                     </div>
                     <div class="form-group">
                         <label>Sexo</label>

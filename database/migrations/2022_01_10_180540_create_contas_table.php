@@ -15,7 +15,8 @@ class CreateContasTable extends Migration
     {
         Schema::create('contas', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_usuario');
+            $table->string('cpf_usuario');
+            $table->string('numero_conta');
             $table->float('saldo');
             $table->timestamps();
         });

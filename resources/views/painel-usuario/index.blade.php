@@ -1,279 +1,636 @@
+@extends('template.painel-principal')
+@section('content')
+@section('title', 'Bem Vindo! ')
 <?php
 
-use App\Models\usuario;
-
 @session_start();
-$id_usuario = @$_SESSION['id_usuario'];
-$usuario = usuario::find($id_usuario);
 
 ?>
-<!DOCTYPE html>
-<html lang="pt-br">
+<!--  Main -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 
-<head>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Ubuntu', sans-serif;
+    }
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Rodrigo Lima">
+    :root {
+        --blue: #171717;
+        --white: #fff;
+        --grey: #f5f5f5;
+        --black1: #222;
+        --black2: #999;
+    }
 
-    <title>@yield('title')</title>
+    body {
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
 
-    <!-- Custom fonts for this template-->
-    <link href="{{ URL::asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    .container {
+        position: relative;
+        width: 100%;
+    }
 
-    <!-- Custom styles for this template-->
-    <link href="{{ URL::asset('css/sb-admin-2.min.css') }}"" rel=" stylesheet">
-    <link href="{{ URL::asset('css/style.css') }}" rel="stylesheet">
+    /*  Main  */
 
-    <link href="{{ URL::asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    .main {
+        position: absolute;
+        width: 100%;
+        background: var(--white);
+        transition: 0.5s;
+        right: 5%;
+    }
+
+    .main.active {
+        width: calc(100% - 80px);
+        left: 0
+    }
+
+    .topbar {
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 10px;
+    }
+
+    .search {
+        position: relative;
+        width: 400px;
+        margin: 0 10px;
+
+    }
+
+    .search label {
+        position: relative;
+        width: 100%;
+    }
+
+    .search label input {
+        width: 100%;
+        height: 40px;
+        border-radius: 40px;
+        padding: 5px 20px;
+        padding-left: 35px;
+        font-size: 18px;
+        outline: none;
+        border: 1px solid var(--black2);
+    }
+
+    .search label ion-icon {
+        position: absolute;
+        top: 0;
+        left: 10px;
+        font-size: 1.2em;
+
+    }
+
+    .user {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .user img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .cardBox {
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 30px;
+    }
+
+    .cardBox .card {
+        position: relative;
+        background: var(--white);
+        padding: 30px;
+        border-radius: 20px;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .cardBox .card .numbers {
+        position: relative;
+        font-weight: 500;
+        font-size: 2.5em;
+        color: var(--blue);
+    }
+
+    .cardBox .card .cardName {
+        color: var(--black2);
+        font-size: 1.1em;
+        margin-top: 5px;
+    }
+
+    .cardBox .card .iconBx {
+        font-size: 3.5em;
+        color: var(--black2);
+    }
+
+    .cardBox .card:hover {
+        background: var(--blue);
+    }
+
+    .cardBox .card:hover .numbers,
+    .cardBox .card:hover .cardName,
+    .cardBox .card:hover .iconBx {
+        color: var(--white);
+    }
+
+    .details {
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-gap: 30px;
+        /* margin-top: 10px;*/
+    }
+
+    .details .recentOrders {
+        position: relative;
+        display: grid;
+        min-height: 500px;
+        background: var(--white);
+        padding: 20px;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+    }
+
+    .cardHeader {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .cardHeader h2 {
+        font-weight: 600;
+        color: var(--blue);
+    }
+
+    .btn {
+        position: relative;
+        padding: 5px 10px;
+        background: var(--blue);
+        text-decoration: none;
+        color: var(--white);
+        border-radius: 6px;
+    }
+
+    .details table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .details table thead td {
+        font-weight: 600;
+    }
+
+    .details .recentOrders table tr {
+        color: var(--black1);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .details .recentOrders table tr:last-child {
+        border-bottom: none;
+    }
+
+    .details .recentOrders table tbody tr:hover {
+        background: var(--blue);
+        color: var(--white);
+    }
+
+    .details .recentOrders table tr td {
+        padding: 10px;
+
+    }
+
+    .details .recentOrders table tr td:last-child {
+        text-align: end;
+    }
+
+    .details .recentOrders table tr td:nth-child(2) {
+        text-align: end;
+    }
+
+    .details .recentOrders table tr td:nth-child(3) {
+        text-align: center;
+    }
+
+    .status.delivered {
+
+        padding: 2px 4px;
+        background: #8de02c;
+        color: var(--white);
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .status.return {
+
+        padding: 2px 4px;
+        background: #f00;
+        color: var(--white);
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .status.pending {
+
+        padding: 2px 4px;
+        background: #f9ca3f;
+        color: var(--white);
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .status.inprogress {
+
+        padding: 2px 4px;
+        background: #1795ce;
+        color: var(--white);
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .recentCustomers {
+        position: relative;
+        display: grid;
+        min-height: 500px;
+        padding: 20px;
+        background: var(--white);
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+    }
+
+    .recentCustomers .imgBx {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .recentCustomers .imgBx img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ URL::asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ URL::asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    .recentCustomers table tr td {
+        padding: 12px 10px;
+    }
 
-    <link rel="shortcut icon" href="{{ URL::asset('img/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ URL::asset('img/favicon.ico') }}" type="image/x-icon">
+    .recentCustomers table tr td h4 {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.2em;
+    }
 
-</head>
+    .recentCustomers table tr td h4 span {
+        font-size: 14px;
+        color: var(--black2);
+    }
 
-<body id="page-top">
+    .recentCustomers table tr:hover {
+        background: var(--blue);
+        color: var(--white);
+    }
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
-
-                <div class="sidebar-brand-text mx-3">BEM VINDO</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+    .recentCustomers table tr:hover td h4 span {
+        columns: var(--white);
+    }
 
 
+    /*  Design Responsivo */
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+    @media (max-width: 1600px) {
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Cadastros
+        .navigation.active {
+            width: 300px;
+
+        }
+
+        .cardBox .card .numbers {
+            position: relative;
+            font-weight: 500;
+            font-size: 2.5em;
+            color: var(--blue);
+        }
+
+        .main {
+            width: 100%;
+        }
+
+
+        .cardBox {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 991px) {
+
+        .navigation.active {
+            width: 300px;
+
+        }
+
+        .cardBox .card .numbers {
+            position: relative;
+            font-weight: 500;
+            font-size: 2em;
+            color: var(--blue);
+        }
+
+        .main {
+            width: 100%;
+        }
+
+
+        .cardBox {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .details {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        .recentOrders {
+            overflow-x: auto;
+        }
+
+        .status.inprogress {
+            white-space: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .cardBox {
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        .cardHeader h2 {
+            font-size: 20px;
+        }
+
+        .cardBox .card .numbers {
+            position: relative;
+            font-weight: 500;
+            font-size: 1em;
+            color: var(--blue);
+        }
+
+        .user {
+            min-width: 40px;
+        }
+
+        .toggle {
+            z-index: 10001;
+        }
+
+    }
+</style>
+<div class="container">
+    <div class="main">
+        <div class="topbar">
+
+
+            <!-- Pesquisa -->
+            <div class="search">
+                <label>
+                    <input type="text" placeholder="Pesquisa">
+                    <ion-icon name="search-outline"></ion-icon>
+                </label>
             </div>
 
+        </div>
 
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-users"></i>
-                    <span>Operações</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="">Depositar</a>
-                        <a class="collapse-item" href="">Sacar</a>
-                        <a class="collapse-item" href="">Transferir</a>
-                    </div>
+        <!-- Cards -->
+        <div class="cardBox">
+            <div class="card">
+                <div>
+                    <div class="numbers">1,504</div>
+                    <div class="cardName">Daily Views</div>
                 </div>
-            </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-plus"></i>
-                    <span>Cadastros</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="">Categorias</a>
-                        <a class="collapse-item" href="">Automóveis</a>
-
-                    </div>
+                <div class="iconBx">
+                    <ion-icon name="eye-outline"></ion-icon>
                 </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Consultas
             </div>
 
-
-
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Colocar Opções</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-
-
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$usuario->nome}} - Nº Conta: {{$usuario->numero_conta}}</span>
-                                <img class="img-profile rounded-circle" src="{{ URL::asset('img/sem-foto.jpg') }}">
-
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#ModalPerfil">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-primary"></i>
-                                    Editar Perfil
-                                </a>
-
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-danger"></i>
-                                    Sair
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
-
-                </nav>
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    @yield('content')
-
+            <div class="card">
+                <div>
+                    <div class="numbers">80</div>
+                    <div class="cardName">Operações no dia</div>
                 </div>
-                <!-- /.container-fluid -->
 
+                <div class="iconBx">
+                    <ion-icon name="cart-outline"></ion-icon>
+                </div>
             </div>
-            <!-- End of Main Content -->
 
+            <div class="card">
+                <div>
+                    <div class="numbers">R$500,00</div>
+                    <div class="cardName">Limite do Cartão</div>
+                </div>
+
+                <div class="iconBx">
+                    <ion-icon name="chatbubbles-outline"></ion-icon>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="numbers">{{$_SESSION['saldo_usuario']}}</div>
+                    <div class="cardName">Saldo Disponível</div>
+                </div>
+
+                <div class="iconBx">
+                    <ion-icon name="cash-outline"></ion-icon>
+                </div>
+            </div>
+        </div>
+        <!-- text content  -->
+
+        <div class="details">
+            <div class="recentOrders">
+                <div class="cardHeader">
+                    <h2> Transações Recentes</h2>
+                    <a href="#" class="btn">Ver Todos</a>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Nome</td>
+                            <td>Valor</td>
+                            <td>Data</td>
+                            <td>Tipo</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Rodrigo</td>
+                            <td>$1200</td>
+                            <td>22/01/22</td>
+                            <td><span class="status delivered">Depósito</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>CAixa de ferramenta</td>
+                            <td>$1200</td>
+                            <td>22/01/22</td>
+                            <td><span class="status pending">Débito no Cartão</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pratos</td>
+                            <td>$25</td>
+                            <td>Due</td>
+                            <td><span class="status inprogress">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pratos</td>
+                            <td>$25</td>
+                            <td>Due</td>
+                            <td><span class="status delivered">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pratos</td>
+                            <td>$25</td>
+                            <td>Due</td>
+                            <td><span class="status return">Return</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pratos</td>
+                            <td>$25</td>
+                            <td>Due</td>
+                            <td><span class="status pending">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pratos</td>
+                            <td>$25</td>
+                            <td>Due</td>
+                            <td><span class="status inprogress">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pratos</td>
+                            <td>$25</td>
+                            <td>Due</td>
+                            <td><span class="status pending">In Progress</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- New Customers -->
+            <div class="recentCustomers">
+                <div class="cardHeader">
+                    <h2> Contatos Recentes</h2>
+                </div>
+                <table>
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="{{ URL::asset('img/img1.jpg') }}"></div>
+                        </td>
+                        <td>
+                            <h4> David <br><span>Conta: XXXX</span> </h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="{{ URL::asset('img/img2.jpg') }}"></div>
+                        </td>
+                        <td>
+                            <h4> Rodrigo <br><span>Conta: XXXX</span> </h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="{{ URL::asset('img/img3.jpg') }}"></div>
+                        </td>
+                        <td>
+                            <h4> Olivia <br><span>Conta: XXXX</span> </h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="{{ URL::asset('img/img4.jpg') }}"></div>
+                        </td>
+                        <td>
+                            <h4> Amelia <br><span>Conta: XXXX</span> </h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="{{ URL::asset('img/img5.jpg') }}"></div>
+                        </td>
+                        <td>
+                            <h4> Amit <br><span>Conta: XXXX</span> </h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="{{ URL::asset('img/img6.jpg') }}"></div>
+                        </td>
+                        <td>
+                            <h4> Ashraf <br><span>Conta: XXXX</span> </h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="{{ URL::asset('img/img7.jpg') }}"></div>
+                        </td>
+                        <td>
+                            <h4> Diana <br><span>Conta: XXXX</span> </h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="60px">
+                            <div class="imgBx"><img src="{{ URL::asset('img/img8.jpg') }}"></div>
+                        </td>
+                        <td>
+                            <h4> Amit <br><span>Conta: XXXX</span> </h4>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
 
         </div>
-        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-
-
-
-    <!--  Modal Perfil-->
-    <div class="modal fade" id="ModalPerfil" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar Perfil</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-
-
-
-                <form id="form-perfil" method="POST" action="">
-                    @csrf
-                    @method('put');
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <label>Nome</label>
-                            <input value="{{$usuario->nome}}" type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
-                        </div>
-
-                        <div class="form-group">
-                            <label>CPF</label>
-                            <input value="{{$usuario->cpf}}" type="text" class="form-control" id="cpf" name="cpf" placeholder="CPF">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input value="{{$usuario->usuario}}" type="text" class="form-control" id="usuario" name="usuario" placeholder="Email">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Senha</label>
-                            <input value="{{$usuario->senha}}" type="text" class="form-control" id="text" name="senha" placeholder="Senha">
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="btn-fechar" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" name="btn-salvar-perfil" id="btn-salvar-perfil" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
-
-
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ URL::asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ URL::asset('js/sb-admin-2.min.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ URL::asset('vendor/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ URL::asset('js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ URL::asset('js/demo/chart-pie-demo.js') }}"></script>
-
-    <!-- Page level plugins -->
-    <script src="{{ URL::asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ URL::asset('js/demo/datatables-demo.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-    <script src="{{ URL::asset('js/mascaras.js') }}"></script>
-
-</body>
-
-</html>
+</div>
+</div>
+@endsection
