@@ -2,6 +2,17 @@ body {
     font-family: "Lato", sans-serif;
 }
 
+.direita{
+    position:absolute;
+    right:20px;
+ }
+ 
+ .topo{
+    position:absolute;
+    top:0px;
+ }
+ 
+ 
 
 
 .main-head {

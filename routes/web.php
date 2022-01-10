@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('index');
+})->name('home');
 
-
-Route::get('ola/{text}', function ($text) {
-    echo 'Olá, ' . $text;
-});
+Route::post('painel', [UsuarioController::class, 'login'])->name('usuarios.login');
 
 Route::get('registrar', function () {
     return view('registrar');
 });
+
+
+Route::get('/', [UsuarioController::class, 'logout'])->name('usuarios.logout');

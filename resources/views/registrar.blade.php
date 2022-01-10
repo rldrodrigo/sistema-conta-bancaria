@@ -21,7 +21,7 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}" />
 
-    <title>Login</title>
+    <title>Registrar</title>
     <link rel="shortcut icon" href="{{ URL::asset('img/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ URL::asset('img/favicon.ico') }}" type="image/x-icon">
 </head>
@@ -46,7 +46,7 @@
                 <form>
                     <div class="form-group">
                         <label>CPF</label>
-                        <input type="text" class="form-control" placeholder="CPF" name="cpf">
+                        <input type="text" class="form-control" placeholder="CPF" name="cpf" id="cpf">
                     </div>
                     <div class="form-group">
                         <label>E-mail</label>
@@ -83,7 +83,8 @@
         </div>
     </div>
     <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    <script src="{{ URL::asset('js/mascaras.js') }}"></script>
 </body>
 
 </html>

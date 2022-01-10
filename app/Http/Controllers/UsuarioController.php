@@ -13,24 +13,17 @@ class UsuarioController extends Controller
         $usuario = $request->usuario;
         $senha = $request->senha;
 
-        $usuarios = usuario::where('usuario', '=', $usuario)->orwhere('cpf', '=', $usuario)->where('senha', '=', $senha)->first();
+        $usuarios = usuario::where('email', '=', $usuario)->orwhere('cpf', '=', $usuario)->where('senha', '=', $senha)->first();
 
         if (@$usuarios->id != null) {
             @session_start();
             $_SESSION['id_usuario'] = $usuarios->id;
+            $_SESSION['cpf_usuario'] = $usuarios->cpf;
             $_SESSION['nome_usuario'] = $usuarios->nome;
-            $_SESSION['nivel_usuario'] = $usuarios->nivel;
-            $_SESSION['cpf'] = $usuarios->nivel;
+            $_SESSION['email_usuario'] = $usuarios->email;
+            $_SESSION['numero_conta_usuario'] = $usuarios->numero_conta;
 
-            if ($_SESSION['nivel_usuario'] == 'admin') {
-                return view('painel-admin.index');
-            }
-            if ($_SESSION['nivel_usuario'] == 'instrutor') {
-                return view('painel-instrutor.index');
-            }
-            if ($_SESSION['nivel_usuario'] == 'recep') {
-                return view('painel-recepcao.index');
-            }
+            return view('painel-usuario.index');
         } else {
             echo "<script language='javascript'> window.alert('Dados Incorretos!') </script>";
             return view('index');
