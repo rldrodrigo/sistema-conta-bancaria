@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::get('ola/{text}', function ($text) {
     echo 'Olá, ' . $text;
 });
+
+Route::get('registrar', function () {
+    return view('registrar');
+});

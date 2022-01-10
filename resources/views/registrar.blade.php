@@ -21,7 +21,6 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js'></script>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('css/style.css') }}" />
 
-
     <title>Login</title>
     <link rel="shortcut icon" href="{{ URL::asset('img/favicon.ico') }}" type="image/x-icon">
     <link rel="icon" href="{{ URL::asset('img/favicon.ico') }}" type="image/x-icon">
@@ -43,19 +42,42 @@
     </div>
     <div class="main">
         <div class="col-md-6 col-sm-12">
-            <div class="login-form">
-                <form action="" method="POST">
-                    @csrf
+            <div class="register-form">
+                <form>
                     <div class="form-group">
-                        <label>Usuário</label>
-                        <input type="text" class="form-control" placeholder="Usuário" name="usuario">
+                        <label>CPF</label>
+                        <input type="text" class="form-control" placeholder="CPF" name="cpf">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" class="form-control" placeholder="Email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Data de Nascimento</label>
+                        <input type="date" class="form-control" name="data_nascimento">
+                    </div>
+                    <div class="form-group">
+                        <label>Endereço</label>
+                        <input type="text" class="form-control" placeholder="Endereço" name="endereco">
+                    </div>
+                    <div class="form-group">
+                        <label>Sexo</label>
+                        <div>
+                            <input type="radio" name="sexo" value="f" checked>
+                            <label for="huey">Feminino</label>
+                        </div>
+
+                        <div>
+                            <input type="radio" name="sexo" value="m">
+                            <label for="dewey">Masculino</label>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>Senha</label>
                         <input type="password" class="form-control" placeholder="Senha" name="senha">
                     </div>
-                    <button type="submit" class="btn btn-black">Entrar</button>
-                    <a href="registrar"><button type="button" class="btn btn-secondary">Registrar</button> </a>
+                    <button type="submit" class="btn btn-black">Registrar</button>
+                    <a href="/"><button type="button" class="btn btn-secondary">Voltar</button> </a>
                 </form>
             </div>
         </div>
