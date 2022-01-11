@@ -37,5 +37,6 @@ Tela de Login
 Tela Principal
 ![image](https://user-images.githubusercontent.com/51513403/148969601-c2e8dffe-4ce4-4419-a4b7-621641c63da4.png)
 
-
+Tela de Transações
+![image](https://user-images.githubusercontent.com/51513403/148969993-e300b63e-1314-4ff0-93ef-aec7fc642171.png)
 
