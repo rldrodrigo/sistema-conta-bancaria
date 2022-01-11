@@ -69,7 +69,7 @@ use App\Models\usuario;
                 <td>{{'R$' . number_format((float)$item->valor_transacao, 2, ',', '')}}</td>
                 <td>{{$item->created_at}}</td>
                 <?php if ($item->tipo == 'saque') { ?>
-                    <td><span class="status saque">Depósito</span></td>
+                    <td><span class="status saque">Saque</span></td>
                 <?php } ?>
                 <?php if ($item->tipo == 'deposito') { ?>
                     <td><span class="status deposito">Depósito</span></td>
