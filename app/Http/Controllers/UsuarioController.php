@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\conta;
+use App\Models\transacoe;
 use App\Models\usuario;
 use Illuminate\Http\Request;
 
@@ -28,10 +29,12 @@ class UsuarioController extends Controller
             $contas = conta::where('cpf_usuario', '=', $usuarios->cpf)->first();
             $_SESSION['saldo_usuario'] = 'R$' . number_format((float)$contas->saldo, 2, ',', '');
 
+            $tabela = transacoe::orderby('id', 'desc')->where('cpf_usuario_destinatario', '=', $usuarios->cpf)->orwhere('cpf_usuario_remetente', '=', $usuarios->cpf)->paginate();
 
-            return view('painel-usuario.index');
+            return view('painel-usuario.index', ['itens' => $tabela]);
         } else {
             echo "<script language='javascript'> window.alert('Dados Incorretos!') </script>";
+
             return view('index');
         }
     }

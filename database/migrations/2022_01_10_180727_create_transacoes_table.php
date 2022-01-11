@@ -19,6 +19,7 @@ class CreateTransacoesTable extends Migration
             $table->string('cpf_usuario_remetente');
             $table->string('cpf_usuario_destinatario');
             $table->float('valor_transacao');
+            $table->string('tipo', 15);
         });
     }
 

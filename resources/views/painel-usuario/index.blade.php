@@ -3,6 +3,8 @@
 @section('title', 'Bem Vindo! ')
 <?php
 
+use App\Models\usuario;
+
 @session_start();
 
 ?>
@@ -45,20 +47,6 @@
         right: 5%;
     }
 
-    .main.active {
-        width: calc(100% - 80px);
-        left: 0
-    }
-
-    .topbar {
-        width: 100%;
-        height: 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 10px;
-    }
-
     .search {
         position: relative;
         width: 400px;
@@ -97,15 +85,6 @@
         border-radius: 50%;
         overflow: hidden;
         cursor: pointer;
-    }
-
-    .user img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
     }
 
     .cardBox {
@@ -237,7 +216,7 @@
         text-align: center;
     }
 
-    .status.delivered {
+    .status.deposito {
 
         padding: 2px 4px;
         background: #8de02c;
@@ -247,7 +226,7 @@
         font-weight: 500;
     }
 
-    .status.return {
+    .status.saque {
 
         padding: 2px 4px;
         background: #f00;
@@ -267,7 +246,7 @@
         font-weight: 500;
     }
 
-    .status.inprogress {
+    .status.transferencia {
 
         padding: 2px 4px;
         background: #1795ce;
@@ -389,7 +368,7 @@
             overflow-x: auto;
         }
 
-        .status.inprogress {
+        .status.transferencia {
             white-space: none;
         }
     }
@@ -489,68 +468,50 @@
                     <h2> Transações Recentes</h2>
                     <a href="#" class="btn">Ver Todos</a>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>Nome</td>
-                            <td>Valor</td>
-                            <td>Data</td>
-                            <td>Tipo</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Rodrigo</td>
-                            <td>$1200</td>
-                            <td>22/01/22</td>
-                            <td><span class="status delivered">Depósito</span></td>
-                        </tr>
+                <?php if (count($itens) > 0) { ?>
+                    <table>
 
-                        <tr>
-                            <td>CAixa de ferramenta</td>
-                            <td>$1200</td>
-                            <td>22/01/22</td>
-                            <td><span class="status pending">Débito no Cartão</span></td>
-                        </tr>
-                        <tr>
-                            <td>Pratos</td>
-                            <td>$25</td>
-                            <td>Due</td>
-                            <td><span class="status inprogress">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td>Pratos</td>
-                            <td>$25</td>
-                            <td>Due</td>
-                            <td><span class="status delivered">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td>Pratos</td>
-                            <td>$25</td>
-                            <td>Due</td>
-                            <td><span class="status return">Return</span></td>
-                        </tr>
-                        <tr>
-                            <td>Pratos</td>
-                            <td>$25</td>
-                            <td>Due</td>
-                            <td><span class="status pending">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td>Pratos</td>
-                            <td>$25</td>
-                            <td>Due</td>
-                            <td><span class="status inprogress">In Progress</span></td>
-                        </tr>
-                        <tr>
-                            <td>Pratos</td>
-                            <td>$25</td>
-                            <td>Due</td>
-                            <td><span class="status pending">In Progress</span></td>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <td>Nome</td>
+                                <td>Valor</td>
+                                <td>Data</td>
+                                <td>Tipo</td>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+
+                            @foreach($itens as $item)
+                            <?php
+                            $data = implode('/', array_reverse(explode('-', $item->created_at)));
+
+                            $usuario_remetente = usuario::where('id', '=', $item->instrutor)->first();
+                            $usuario_destinatario = usuario::where('id', '=', $item->instrutor)->first();
+
+
+                            ?>
+                            <tr>
+                                <td>Rodrigo</td>
+                                <td>{{'R$' . number_format((float)$item->valor_transacao, 2, ',', '')}}</td>
+                                <td>{{$item->created_at}}</td>
+                                <?php if ($item->tipo == 'saque') { ?>
+                                    <td><span class="status saque">Depósito</span></td>
+                                <?php } ?>
+                                <?php if ($item->tipo == 'deposito') { ?>
+                                    <td><span class="status deposito">Depósito</span></td>
+                                <?php } ?>
+                                <?php if ($item->tipo == 'transferencia') { ?>
+                                    <td><span class="status transferencia">Transferência</span></td>
+                                <?php } ?>
+                            </tr>
+                            @endforeach
+
+                        </tbody>
+                    <?php } else { ?>
+                        <td>Nenhuma Transação Encontrada</td>
+                    <?php } ?>
+                    </table>
             </div>
 
             <!-- New Customers -->

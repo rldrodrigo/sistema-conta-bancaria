@@ -22,6 +22,7 @@
         </div>
     </div>
     <p align="right">
+        <input value="deposito" type="hidden" name="tipo">
         <input value="{{$_SESSION['cpf_usuario']}}" type="hidden" name="cpf">
         <button type="submit" class="btn btn-primary">Depositar</button>
     </p>

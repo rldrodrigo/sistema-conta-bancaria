@@ -49,7 +49,7 @@ $usuario = usuario::find($id_usuario);
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('home')}}">
 
                 <div class="sidebar-brand-text mx-3"><img src="{{ URL::asset('img/favicon.ico') }}" width="30px" /> BEM VINDO!</div>
             </a>
