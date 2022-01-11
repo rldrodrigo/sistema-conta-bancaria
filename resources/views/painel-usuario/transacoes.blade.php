@@ -40,6 +40,27 @@ use App\Models\usuario;
         font-weight: 500;
     }
 </style>
+<form method="POST" action="{{route('filtrar.transacoes')}}">
+    @csrf
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Digite a data inicial: </label>
+                <input type="date" class="form-control" name="data_inicio" required>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Digite a data final: </label>
+                <input type="date" class="form-control" name="data_fim" required>
+            </div>
+        </div>
+    </div>
+    <p align="right">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </p>
+</form>
 
 <?php if (count($itens) > 0) { ?>
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

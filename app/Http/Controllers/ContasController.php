@@ -167,4 +167,14 @@ class ContasController extends Controller
 
         return view('painel-usuario.grafico', ['itens' => $tabela]);
     }
+
+    public function filtrarTransacoes(Request $request)
+    {
+        $data_inicio  = $request->data_inicio;
+        $data_fim = $request->data_fim;
+
+        @session_start();
+        $tabela = transacoe::orderby('id', 'desc')->where('created_at', '>=', $data_inicio)->where('created_at', '<=', $data_fim)->where('cpf_usuario_destinatario', '=', $_SESSION['cpf_usuario'])->orwhere('cpf_usuario_remetente', '=', $_SESSION['cpf_usuario'])->paginate();
+        return view('painel-usuario.transacoes', ['itens' => $tabela]);
+    }
 }
