@@ -155,7 +155,6 @@ class ContasController extends Controller
     {
         @session_start();
         $tabela = transacoe::orderby('id', 'desc')->where('cpf_usuario_destinatario', '=', $_SESSION['cpf_usuario'])->orwhere('cpf_usuario_remetente', '=', $_SESSION['cpf_usuario'])->paginate();
-
         return view('painel-usuario.transacoes', ['itens' => $tabela]);
     }
 
@@ -172,9 +171,13 @@ class ContasController extends Controller
     {
         $data_inicio  = $request->data_inicio;
         $data_fim = $request->data_fim;
-
         @session_start();
-        $tabela = transacoe::orderby('id', 'desc')->where('created_at', '>=', $data_inicio)->where('created_at', '<=', $data_fim)->where('cpf_usuario_destinatario', '=', $_SESSION['cpf_usuario'])->orwhere('cpf_usuario_remetente', '=', $_SESSION['cpf_usuario'])->paginate();
+        $tabela = transacoe::orderby('id', 'desc')->where(function ($query) {
+            $query->where('cpf_usuario_destinatario', '=', $_SESSION['cpf_usuario'])
+                ->orWhere('cpf_usuario_remetente', '=', $_SESSION['cpf_usuario']);
+        })->where('created_at', '>=', $data_inicio)->where('created_at', '<=', $data_fim)->paginate();
+
+
         return view('painel-usuario.transacoes', ['itens' => $tabela]);
     }
 }
