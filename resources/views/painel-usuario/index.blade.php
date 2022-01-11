@@ -529,7 +529,7 @@ use App\Models\usuario;
                             <div class="imgBx"><img src="{{ URL::asset('img/img1.jpg') }}"></div>
                         </td>
                         <td>
-                            <h4> David <br><span>Conta: XXXX</span> </h4>
+                            <h4> Pessoa 1 <br><span>Conta: XXXX</span> </h4>
                         </td>
                     </tr>
                     <tr>
@@ -537,7 +537,7 @@ use App\Models\usuario;
                             <div class="imgBx"><img src="{{ URL::asset('img/img2.jpg') }}"></div>
                         </td>
                         <td>
-                            <h4> Rodrigo <br><span>Conta: XXXX</span> </h4>
+                            <h4> Pessoa 2 <br><span>Conta: XXXX</span> </h4>
                         </td>
                     </tr>
                     <tr>
@@ -545,7 +545,7 @@ use App\Models\usuario;
                             <div class="imgBx"><img src="{{ URL::asset('img/img3.jpg') }}"></div>
                         </td>
                         <td>
-                            <h4> Olivia <br><span>Conta: XXXX</span> </h4>
+                            <h4> Pessoa 3 <br><span>Conta: XXXX</span> </h4>
                         </td>
                     </tr>
                     <tr>
@@ -553,7 +553,7 @@ use App\Models\usuario;
                             <div class="imgBx"><img src="{{ URL::asset('img/img4.jpg') }}"></div>
                         </td>
                         <td>
-                            <h4> Amelia <br><span>Conta: XXXX</span> </h4>
+                            <h4> Pessoa 4 <br><span>Conta: XXXX</span> </h4>
                         </td>
                     </tr>
                     <tr>
@@ -561,7 +561,7 @@ use App\Models\usuario;
                             <div class="imgBx"><img src="{{ URL::asset('img/img5.jpg') }}"></div>
                         </td>
                         <td>
-                            <h4> Amit <br><span>Conta: XXXX</span> </h4>
+                            <h4> Pessoa 5 <br><span>Conta: XXXX</span> </h4>
                         </td>
                     </tr>
                     <tr>
@@ -569,7 +569,7 @@ use App\Models\usuario;
                             <div class="imgBx"><img src="{{ URL::asset('img/img6.jpg') }}"></div>
                         </td>
                         <td>
-                            <h4> Ashraf <br><span>Conta: XXXX</span> </h4>
+                            <h4> Pessoa 6 <br><span>Conta: XXXX</span> </h4>
                         </td>
                     </tr>
                     <tr>
@@ -577,7 +577,7 @@ use App\Models\usuario;
                             <div class="imgBx"><img src="{{ URL::asset('img/img7.jpg') }}"></div>
                         </td>
                         <td>
-                            <h4> Diana <br><span>Conta: XXXX</span> </h4>
+                            <h4> Pessoa 7 <br><span>Conta: XXXX</span> </h4>
                         </td>
                     </tr>
                     <tr>
@@ -585,7 +585,7 @@ use App\Models\usuario;
                             <div class="imgBx"><img src="{{ URL::asset('img/img8.jpg') }}"></div>
                         </td>
                         <td>
-                            <h4> Amit <br><span>Conta: XXXX</span> </h4>
+                            <h4> Pessoa 8 <br><span>Conta: XXXX</span> </h4>
                         </td>
                     </tr>
                 </table>
