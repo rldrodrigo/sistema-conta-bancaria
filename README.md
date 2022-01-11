@@ -24,4 +24,6 @@ Instale a versão do PHP 7.4 <br/>
     
     php artisan migrate
     
+    php artisan key:generate
+    
     php artisan serve
