@@ -429,8 +429,8 @@ use App\Models\usuario;
 
             <div class="card">
                 <div>
-                    <div class="numbers">80</div>
-                    <div class="cardName">Operações no dia</div>
+                    <div class="numbers">{{count($itens)}}</div>
+                    <div class="cardName">Operações Realizadas</div>
                 </div>
 
                 <div class="iconBx">
@@ -466,9 +466,11 @@ use App\Models\usuario;
             <div class="recentOrders">
                 <div class="cardHeader">
                     <h2> Transações Recentes</h2>
-                    <a href="#" class="btn">Ver Todos</a>
+                    <a href="{{route('transacoes')}}" class="btn">Ver Todos</a>
                 </div>
-                <?php if (count($itens) > 0) { ?>
+                <?php
+                if (count($itens) > 0) {
+                    $qtd = 0; ?>
                     <table>
 
                         <thead>
@@ -481,30 +483,32 @@ use App\Models\usuario;
                         </thead>
                         <tbody>
 
-
                             @foreach($itens as $item)
+
                             <?php
                             $data = implode('/', array_reverse(explode('-', $item->created_at)));
 
                             $usuario_remetente = usuario::where('id', '=', $item->instrutor)->first();
                             $usuario_destinatario = usuario::where('id', '=', $item->instrutor)->first();
 
-
+                            if ($qtd < 10) {
                             ?>
-                            <tr>
-                                <td>Rodrigo</td>
-                                <td>{{'R$' . number_format((float)$item->valor_transacao, 2, ',', '')}}</td>
-                                <td>{{$item->created_at}}</td>
-                                <?php if ($item->tipo == 'saque') { ?>
-                                    <td><span class="status saque">Depósito</span></td>
-                                <?php } ?>
-                                <?php if ($item->tipo == 'deposito') { ?>
-                                    <td><span class="status deposito">Depósito</span></td>
-                                <?php } ?>
-                                <?php if ($item->tipo == 'transferencia') { ?>
-                                    <td><span class="status transferencia">Transferência</span></td>
-                                <?php } ?>
-                            </tr>
+                                <tr>
+                                    <td>{{$_SESSION['nome_usuario']}}</td>
+                                    <td>{{'R$' . number_format((float)$item->valor_transacao, 2, ',', '')}}</td>
+                                    <td>{{$item->created_at}}</td>
+                                    <?php if ($item->tipo == 'saque') { ?>
+                                        <td><span class="status saque">Depósito</span></td>
+                                    <?php } ?>
+                                    <?php if ($item->tipo == 'deposito') { ?>
+                                        <td><span class="status deposito">Depósito</span></td>
+                                    <?php } ?>
+                                    <?php if ($item->tipo == 'transferencia') { ?>
+                                        <td><span class="status transferencia">Transferência</span></td>
+                                    <?php } ?>
+                                </tr>
+                            <?php $qtd++;
+                            } ?>
                             @endforeach
 
                         </tbody>

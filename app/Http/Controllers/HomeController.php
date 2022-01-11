@@ -27,7 +27,6 @@ class HomeController extends Controller
             $tabela = transacoe::orderby('id', 'desc')->where('cpf_usuario_destinatario', '=', $_SESSION['cpf_usuario'])->orwhere('cpf_usuario_remetente', '=', $_SESSION['cpf_usuario'])->paginate();
 
             return view('painel-usuario.index', ['itens' => $tabela]);
-            return view('painel-usuario.index');
         }
         return view('index');
     }

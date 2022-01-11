@@ -106,17 +106,25 @@ $usuario = usuario::find($id_usuario);
                 Consultas
             </div>
 
-
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{route('grafico')}}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Gráfico</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+            <div class="sidebar-heading">
+                Transações
+            </div>
+
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('transacoes')}}">
+                    <i class="fas fa-table"></i>
+                    <span>Relatório</span></a>
+            </li>
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
@@ -214,11 +222,11 @@ $usuario = usuario::find($id_usuario);
 
 
 
-                <form id="form-perfil" method="POST" action="">
+                <form id="form-perfil" method="POST" action="#">
                     @csrf
                     @method('put')
                     <div class="modal-body">
-
+                        (Ainda não funciona)
                         <div class="form-group">
                             <label>Nome</label>
                             <input value="{{$usuario->nome}}" type="text" class="form-control" id="nome" name="nome" placeholder="Nome">
@@ -231,7 +239,7 @@ $usuario = usuario::find($id_usuario);
 
                         <div class="form-group">
                             <label>Email</label>
-                            <input value="{{$usuario->usuario}}" type="text" class="form-control" id="usuario" name="usuario" placeholder="Email">
+                            <input value="{{$usuario->email}}" type="text" class="form-control" id="usuario" name="email" placeholder="Email">
                         </div>
 
                         <div class="form-group">

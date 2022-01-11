@@ -32,4 +32,7 @@ Route::post('painel/sacar', [ContasController::class, 'executarSaque'])->name('e
 Route::get('painel/transferir', [ContasController::class, 'transferir'])->name('transferir');
 Route::post('painel/transferir', [ContasController::class, 'executarTransferencia'])->name('executar.transferencia');
 
+Route::get('painel/transacoes', [ContasController::class, 'exibirTransacoes'])->name('transacoes');
+Route::get('painel/grafico', [ContasController::class, 'exibirGrafico'])->name('grafico');
+
 Route::get('/', [UsuarioController::class, 'logout'])->name('usuarios.logout');
