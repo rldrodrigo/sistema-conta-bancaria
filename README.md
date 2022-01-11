@@ -27,3 +27,10 @@ Instale a versão do PHP 7.4 <br/>
     php artisan key:generate
     
     php artisan serve
+
+
+## TELAS
+Tela de Login
+![image](https://user-images.githubusercontent.com/51513403/148947366-d3256b5e-f6c3-4107-a74e-9c349520424a.png)
+
+
