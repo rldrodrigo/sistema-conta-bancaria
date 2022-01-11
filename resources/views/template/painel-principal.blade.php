@@ -76,9 +76,9 @@ $usuario = usuario::find($id_usuario);
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="#">Depositar</a>
-                        <a class="collapse-item" href="#">Sacar</a>
-                        <a class="collapse-item" href="#">Transferir</a>
+                        <a class="collapse-item" href="{{route('depositar')}}">Depositar</a>
+                        <a class="collapse-item" href="{{route('sacar')}}">Sacar</a>
+                        <a class="collapse-item" href="{{route('transferir')}}">Transferir</a>
                     </div>
                 </div>
             </li>
@@ -252,6 +252,8 @@ $usuario = usuario::find($id_usuario);
     </div>
 
 
+
+
     <!-- Core plugin JavaScript-->
     <script src="{{ URL::asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
@@ -273,6 +275,8 @@ $usuario = usuario::find($id_usuario);
     <script src="{{ URL::asset('js/demo/datatables-demo.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
     <script src="{{ URL::asset('js/mascaras.js') }}"></script>
+
+
 
 </body>
 

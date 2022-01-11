@@ -16,8 +16,8 @@ class CreateTransacoesTable extends Migration
         Schema::create('transacoes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('usuario_remetente');
-            $table->integer('usuario_destinatario');
+            $table->string('cpf_usuario_remetente');
+            $table->string('cpf_usuario_destinatario');
             $table->float('valor_transacao');
         });
     }

@@ -26,7 +26,7 @@ class UsuarioController extends Controller
             $_SESSION['email_usuario'] = $usuarios->email;
             $_SESSION['numero_conta_usuario'] = $usuarios->numero_conta;
             $contas = conta::where('cpf_usuario', '=', $usuarios->cpf)->first();
-            $_SESSION['saldo_usuario'] = 'R$' . number_format((float)$contas->saldo, 2, '.', '');
+            $_SESSION['saldo_usuario'] = 'R$' . number_format((float)$contas->saldo, 2, ',', '');
 
 
             return view('painel-usuario.index');

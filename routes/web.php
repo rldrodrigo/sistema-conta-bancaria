@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContasController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,11 @@ Route::post('painel', [UsuarioController::class, 'login'])->name('usuarios.login
 Route::get('/registrar', [HomeController::class, 'registrar'])->name('registrar');
 
 Route::post('/registrar', [UsuarioController::class, 'insert'])->name('usuarios.insert');
+
+Route::get('painel/depositar', [ContasController::class, 'depositar'])->name('depositar');
+Route::post('painel/depositar', [ContasController::class, 'executarDeposito'])->name('executar.deposito');
+Route::get('painel/sacar', [ContasController::class, 'sacar'])->name('sacar');
+Route::get('painel/transferir', [ContasController::class, 'transferir'])->name('transferir');
 
 
 Route::get('/', [UsuarioController::class, 'logout'])->name('usuarios.logout');
